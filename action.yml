@@ -18,10 +18,6 @@ inputs:
   lambda_ignore_file:
     description: Path to a file that contains patterns to not upload to lambda
     required: false
-  exclude_botocore:
-    description: 'Set to "true" to exclude botocore to reduce dependencies layer size. NOTE: This is not recommended https://aws.amazon.com/blogs/compute/upcoming-changes-to-the-python-sdk-in-aws-lambda/'
-    required: true
-    default: 'false'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -31,7 +27,6 @@ runs:
     - ${{ inputs.lambda_configs_path }}
     - ${{ inputs.lambda_region }}
     - ${{ inputs.lambda_ignore_file }}
-    - ${{ inputs.exclude_botocore }}
 branding:
   icon: 'cloud-lightning'
   color: 'white'
