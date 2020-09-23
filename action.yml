@@ -1,0 +1,37 @@
+name: AWS Lambda Zip Deploy - Python
+author: Qubitro/Klydo
+description: Zip deploy to AWS Lambda with requirements in a separate layer.
+inputs:
+  lambda_function_prefix:
+    description: The Lambda function name prefix.
+    required: true
+  lambda_function_suffix:
+    description: The suffix of the lambda function, can specify env here.
+    required: true
+  lambda_configs_path:
+    description: The path to the lambda configurations.
+    required: true
+  lambda_region:
+    description: The AWS region
+    required: true
+    default: 'eu-west-1'
+  lambda_ignore_file:
+    description: Path to a file that contains patterns to not upload to lambda
+    required: false
+  exclude_botocore:
+    description: 'Set to "true" to exclude botocore to reduce dependencies layer size. NOTE: This is not recommended https://aws.amazon.com/blogs/compute/upcoming-changes-to-the-python-sdk-in-aws-lambda/'
+    required: true
+    default: 'false'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.lambda_function_prefix }}
+    - ${{ inputs.lambda_function_suffix }}
+    - ${{ inputs.lambda_configs_path }}
+    - ${{ inputs.lambda_region }}
+    - ${{ inputs.lambda_ignore_file }}
+    - ${{ inputs.exclude_botocore }}
+branding:
+  icon: 'cloud-lightning'
+  color: 'white'
